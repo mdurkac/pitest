@@ -1,7 +1,9 @@
 package org.pitest.mutationtest.engine.gregor.mutators.experimental;
 
+import org.objectweb.asm.Handle;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.pitest.mutationtest.engine.MutationIdentifier;
 import org.pitest.mutationtest.engine.gregor.MethodInfo;
 import org.pitest.mutationtest.engine.gregor.MethodMutatorFactory;
 import org.pitest.mutationtest.engine.gregor.MutationContext;
@@ -53,11 +55,54 @@ public enum WeakDigestMutator implements MethodMutatorFactory {
             Replacement replacement = REPLACEMENTS.get(name + descriptor);
             if (owner.equals(EXPECTED_OWNER_APACHE_COMMONS_DIGEST_UTILS)
                     && replacement != null && opcode == Opcodes.INVOKESTATIC) {
-                context.registerMutation(factory, replacement.toString());
-                this.mv.visitMethodInsn(opcode, owner, replacement.destination, replacement.descriptor, false);
-            } else {
-                this.mv.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
+                MutationIdentifier identifier = context.registerMutation(factory, replacement.toString());
+                if (context.shouldMutate(identifier)) {
+                    this.mv.visitMethodInsn(opcode, owner, replacement.destination, replacement.descriptor, false);
+                    return;
+                }
             }
+            this.mv.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
+        }
+
+        @Override
+        public void visitInvokeDynamicInsn(String name, String descriptor, Handle bootstrapMethodHandle,
+                                           Object... bootstrapMethodArguments) {
+            bootstrapMethodHandle = mutateHandle(bootstrapMethodHandle);
+            Object[] methodArgs = new Object[bootstrapMethodArguments.length];
+            for (int i = 0; i < bootstrapMethodArguments.length; i++) {
+                Object bootstrapMethodArgument = bootstrapMethodArguments[i];
+                if (bootstrapMethodArgument instanceof Handle) {
+                    methodArgs[i] = mutateHandle((Handle) bootstrapMethodArgument);
+                } else {
+                    methodArgs[i] = bootstrapMethodArgument;
+                }
+            }
+            super.visitInvokeDynamicInsn(name, descriptor, bootstrapMethodHandle, methodArgs);
+        }
+
+        private Handle mutateHandle(Handle handle) {
+            int opcode = handle.getTag();
+            String owner = handle.getOwner();
+            String name = handle.getName();
+            String descriptor = handle.getDesc();
+
+            if (owner.equals(EXPECTED_OWNER_APACHE_COMMONS_DIGEST_UTILS) && opcode == Opcodes.H_INVOKESTATIC) {
+                Replacement replacement = REPLACEMENTS.get(name + descriptor);
+                if (replacement != null) {
+                    if (replacement.descriptor.equals(descriptor)) {
+                        MutationIdentifier id = context.registerMutation(factory, replacement.toString());
+                        if (context.shouldMutate(id)) {
+                            return new Handle(
+                                    opcode,
+                                    owner,
+                                    replacement.destination,
+                                    descriptor,
+                                    handle.isInterface());
+                        }
+                    }
+                }
+            }
+            return handle;
         }
 
         static {
@@ -150,7 +195,7 @@ public enum WeakDigestMutator implements MethodMutatorFactory {
         private final String destination;
         private final String descriptor;
 
-        public Replacement(String name, String destination, String descriptor) {
+        private Replacement(String name, String destination, String descriptor) {
             this.name = name;
             this.destination = destination;
             this.descriptor = descriptor;
