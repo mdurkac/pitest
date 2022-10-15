@@ -59,6 +59,21 @@ public class WeakDigestSha256MutatorTest {
                 .firstMutantShouldReturn(ArrayUtils.toObject(input), DigestUtils.md5Hex(input));
     }
 
+    @Test
+    public void stringShaHexLambda() {
+        String input = "hello";
+        v.forFunctionClass(StringMd5LambdaTestClass.class)
+                .firstMutantShouldReturn(input, DigestUtils.md5Hex(input));
+    }
+
+    private static class StringMd5LambdaTestClass implements Function<String, String> {
+        @Override
+        public String apply(String s) {
+            Function<String, String> function = DigestUtils::sha256Hex;
+            return function.apply(s);
+        }
+    }
+
     private static class StringMd5TestClass implements Function<String, Byte[]> {
 
         @Override
