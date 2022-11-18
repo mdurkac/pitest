@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.AuthTokenIsAlwaysAuthenticatedMutator.AUTH_TOKEN_IS_ALWAYS_AUTHENTICATED_MUTATOR;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.AuthTokenIsAlwaysAuthenticatedMutator.AUTH_TOKEN_IS_ALWAYS_AUTHENTICATED_MUTATOR;
 
 public class AuthTokenIsAlwaysAuthenticatedMutatorTest {
 

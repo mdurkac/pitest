@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.AlwaysEnabledUserDetailsMutator.ALWAYS_ENABLED_USER_DETAILS_MUTATOR;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.AlwaysEnabledUserDetailsMutator.ALWAYS_ENABLED_USER_DETAILS_MUTATOR;
 
 public class AlwaysEnabledUserDetailsMutatorTest {
 

@@ -9,7 +9,7 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.NoOpPasswordEncoderMutator.NOOP_PASSWORD_ENCODER_MUTATOR;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.NoOpPasswordEncoderMutator.NOOP_PASSWORD_ENCODER_MUTATOR;
 
 public class NoOpPasswordEncoderMutatorTest {
 

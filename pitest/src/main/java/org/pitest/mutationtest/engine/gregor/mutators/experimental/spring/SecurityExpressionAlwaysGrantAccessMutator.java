@@ -1,4 +1,4 @@
-package org.pitest.mutationtest.engine.gregor.mutators.experimental;
+package org.pitest.mutationtest.engine.gregor.mutators.experimental.spring;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;

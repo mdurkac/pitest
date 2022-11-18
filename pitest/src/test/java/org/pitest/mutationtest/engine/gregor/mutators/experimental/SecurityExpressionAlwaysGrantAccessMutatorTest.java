@@ -11,7 +11,7 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.SecurityExpressionAlwaysGrantAccessMutator.SECURITY_EXPRESSION_ALWAYS_GRANT_ACCESS_MUTATOR;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.SecurityExpressionAlwaysGrantAccessMutator.SECURITY_EXPRESSION_ALWAYS_GRANT_ACCESS_MUTATOR;
 
 public class SecurityExpressionAlwaysGrantAccessMutatorTest {
 
