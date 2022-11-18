@@ -13,7 +13,7 @@ import java.util.Map;
 
 public enum WeakDigestMutator implements MethodMutatorFactory {
 
-    EXPERIMENTAL_WEAK_DIGEST;
+    USE_MD5_FOR_ENCRYPTION_DIGEST_UTILS_MUTATOR;
 
     @Override
     public MethodVisitor create(MutationContext context, MethodInfo methodInfo, MethodVisitor methodVisitor) {
@@ -32,7 +32,7 @@ public enum WeakDigestMutator implements MethodMutatorFactory {
 
     @Override
     public String toString() {
-        return "EXPERIMENTAL_WEAK_DIGEST";
+        return "USE_MD5_FOR_ENCRYPTION_DIGEST_UTILS_MUTATOR";
     }
 
     private static final class WeakDigestMutatorMethodVisitor extends MethodVisitor {

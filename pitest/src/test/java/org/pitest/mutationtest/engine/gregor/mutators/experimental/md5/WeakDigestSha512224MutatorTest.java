@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Function;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.WeakDigestMutator.EXPERIMENTAL_WEAK_DIGEST;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.WeakDigestMutator.USE_MD5_FOR_ENCRYPTION_DIGEST_UTILS_MUTATOR;
 
 public class WeakDigestSha512224MutatorTest {
 
-    MutatorVerifierStart v = MutatorVerifierStart.forMutator(EXPERIMENTAL_WEAK_DIGEST)
+    MutatorVerifierStart v = MutatorVerifierStart.forMutator(USE_MD5_FOR_ENCRYPTION_DIGEST_UTILS_MUTATOR)
             .notCheckingUnMutatedValues();
 
     @Test

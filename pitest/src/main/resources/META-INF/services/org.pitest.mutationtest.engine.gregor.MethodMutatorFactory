@@ -18,6 +18,10 @@ org.pitest.mutationtest.engine.gregor.mutators.experimental.BigDecimalMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.BigIntegerMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.WeakDigestMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.NoOpPasswordEncoderMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.AlwaysEnabledUserDetailsMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.SecurityExpressionAlwaysGrantAccessMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.AuthTokenIsAlwaysAuthenticatedMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.PermitAllOnUrlRequiringAuthenticationMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.MemberVariableMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveIncrementsMutator
@@ -28,3 +32,7 @@ org.pitest.mutationtest.engine.gregor.mutators.experimental.BigDecimalMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.BigIntegerMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.WeakDigestMutator
 org.pitest.mutationtest.engine.gregor.mutators.experimental.NoOpPasswordEncoderMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.AlwaysEnabledUserDetailsMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.SecurityExpressionAlwaysGrantAccessMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.AuthTokenIsAlwaysAuthenticatedMutator
+org.pitest.mutationtest.engine.gregor.mutators.experimental.PermitAllOnUrlRequiringAuthenticationMutator
