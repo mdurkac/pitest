@@ -31,7 +31,7 @@ public enum SecurityExpressionAlwaysGrantAccessMutator implements MethodMutatorF
 
     @Override
     public String toString() {
-        return "SECURITY_EXPRESSION_ALWAYS_GRANT_ACCESS_MUTATOR";
+        return "SECURITY_EXPRESSION_TRUE_MUTATOR";
     }
 
     private static final class SecurityExpressionAlwaysGrantAccessMethodVisitor extends MethodVisitor {

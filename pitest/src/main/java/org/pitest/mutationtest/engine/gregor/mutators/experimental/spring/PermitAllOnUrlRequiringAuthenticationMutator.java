@@ -27,7 +27,7 @@ public enum PermitAllOnUrlRequiringAuthenticationMutator implements MethodMutato
 
     @Override
     public String toString() {
-        return "PERMIT_ALL_ON_URL_REQUIRING_AUTHENTICATION_MUTATOR";
+        return "PERMIT_ALL_ON_AUTHENTICATED_MUTATOR";
     }
 
     private static final class PermitAllOnUrlRequiringAuthenticationMethodVisitor extends MethodVisitor {
