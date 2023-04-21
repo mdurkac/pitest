@@ -9,13 +9,49 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.NoOpPasswordEncoderMutator.NOOP_PASSWORD_ENCODER_MUTATOR;
+import static org.pitest.mutationtest.engine.gregor.mutators.experimental.spring.NoOpPasswordEncoderMutator.NOOP_PASSWORD_ENCODER;
 
 public class NoOpPasswordEncoderMutatorTest {
 
     MutatorVerifierStart verifier = MutatorVerifierStart
-            .forMutator(NOOP_PASSWORD_ENCODER_MUTATOR)
+            .forMutator(NOOP_PASSWORD_ENCODER)
             .notCheckingUnMutatedValues();
+
+    @Test
+    public void bcryptInterfaceEncodeTest() {
+        verifier.forFunctionClass(BCryptInterfaceEncodeTestClass.class)
+                // Expect mutator to use NoOpPasswordEncoder, password is not encoded
+                .firstMutantShouldReturn("password", "password");
+    }
+
+    private static class BCryptInterfaceEncodeTestClass implements Function<String, String> {
+
+        @Override
+        public String apply(String rawPassword) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            // This will be mutated
+            return passwordEncoder.encode(rawPassword);
+        }
+    }
+
+    // More unit tests.
+
+    @Test
+    public void bcryptInterfaceMatchesTest() {
+        verifier.forBiFunctionClass(BCryptInterfaceMatchesTestClass.class)
+                .firstMutantShouldReturn("password", "password", true);
+        verifier.forBiFunctionClass(BCryptInterfaceMatchesTestClass.class)
+                .firstMutantShouldReturn("password", "password2", false);
+    }
+
+    private static class BCryptInterfaceMatchesTestClass implements BiFunction<String, String, Boolean> {
+
+        @Override
+        public Boolean apply(String rawPassword, String encodedPassword) {
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
+            return encoder.matches(rawPassword, encodedPassword);
+        }
+    }
 
     @Test
     public void bcryptEncodeTest() {
@@ -28,20 +64,6 @@ public class NoOpPasswordEncoderMutatorTest {
         verifier.forBiFunctionClass(BCryptMatchesTestClass.class)
                 .firstMutantShouldReturn("password", "password", true);
         verifier.forBiFunctionClass(BCryptMatchesTestClass.class)
-                .firstMutantShouldReturn("password", "password2", false);
-    }
-
-    @Test
-    public void bcryptInterfaceEncodeTest() {
-        verifier.forFunctionClass(BCryptInterfaceEncodeTestClass.class)
-                .firstMutantShouldReturn("password", "password");
-    }
-
-    @Test
-    public void bcryptInterfaceMatchesTest() {
-        verifier.forBiFunctionClass(BCryptInterfaceMatchesTestClass.class)
-                .firstMutantShouldReturn("password", "password", true);
-        verifier.forBiFunctionClass(BCryptInterfaceMatchesTestClass.class)
                 .firstMutantShouldReturn("password", "password2", false);
     }
 
@@ -72,7 +94,6 @@ public class NoOpPasswordEncoderMutatorTest {
         verifier.forBiFunctionClass(SCryptInterfaceMatchesTestClass.class)
                 .firstMutantShouldReturn("password", "password2", false);
     }
-
     private static class BCryptEncodeTestClass implements Function<String, String> {
 
         @Override
@@ -80,8 +101,8 @@ public class NoOpPasswordEncoderMutatorTest {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             return encoder.encode(s);
         }
-    }
 
+    }
     private static class BCryptMatchesTestClass implements BiFunction<String, String, Boolean> {
 
         @Override
@@ -89,24 +110,7 @@ public class NoOpPasswordEncoderMutatorTest {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             return encoder.matches(rawPassword, encodedPassword);
         }
-    }
 
-    private static class BCryptInterfaceEncodeTestClass implements Function<String, String> {
-
-        @Override
-        public String apply(String rawPassword) {
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            return passwordEncoder.encode(rawPassword);
-        }
-    }
-
-    private static class BCryptInterfaceMatchesTestClass implements BiFunction<String, String, Boolean> {
-
-        @Override
-        public Boolean apply(String rawPassword, String encodedPassword) {
-            PasswordEncoder encoder = new BCryptPasswordEncoder();
-            return encoder.matches(rawPassword, encodedPassword);
-        }
     }
 
     private static class SCryptEncodeTestClass implements Function<String, String> {

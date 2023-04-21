@@ -12,7 +12,7 @@ import java.util.Set;
 
 public enum NoOpPasswordEncoderMutator implements MethodMutatorFactory {
 
-    NOOP_PASSWORD_ENCODER_MUTATOR;
+    NOOP_PASSWORD_ENCODER;
 
     @Override
     public MethodVisitor create(MutationContext context, MethodInfo methodInfo, MethodVisitor methodVisitor) {
@@ -31,7 +31,7 @@ public enum NoOpPasswordEncoderMutator implements MethodMutatorFactory {
 
     @Override
     public String toString() {
-        return "NOOP_PASSWORD_ENCODER_MUTATOR";
+        return "NOOP_PASSWORD_ENCODER";
     }
 
     private static final class NoOpPasswordEncoderMethodVisitor extends MethodVisitor {

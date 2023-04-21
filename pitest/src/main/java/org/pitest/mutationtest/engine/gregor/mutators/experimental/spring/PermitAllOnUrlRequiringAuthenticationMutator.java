@@ -48,7 +48,7 @@ public enum PermitAllOnUrlRequiringAuthenticationMutator implements MethodMutato
                     && opcode == Opcodes.INVOKEVIRTUAL
                     && desc.equals("()Lorg/springframework/security/config/annotation/web/configurers/ExpressionUrlAuthorizationConfigurer$ExpressionInterceptUrlRegistry;")
                     && !itf) {
-                final MutationIdentifier newId = context.registerMutation(factory, "Replacing Authentication#isAuthenticated result with true");
+                final MutationIdentifier newId = context.registerMutation(factory, "Replacing authenticated with permitAll");
                 if (context.shouldMutate(newId)) {
                     mv.visitMethodInsn(
                             Opcodes.INVOKEVIRTUAL,
